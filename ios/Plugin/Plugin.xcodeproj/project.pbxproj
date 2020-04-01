@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		03FC29A292ACC40490383A1F /* Pods_Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */; };
 		20C0B05DCFC8E3958A738AF2 /* Pods_PluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6753A823D3815DB436415E3 /* Pods_PluginTests.framework */; };
+		3326E2D22434D8B3001B6F01 /* AppleProviderHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3326E2D12434D8B3001B6F01 /* AppleProviderHandler.swift */; };
 		50ADFF92201F53D600D50D53 /* Plugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50ADFF88201F53D600D50D53 /* Plugin.framework */; };
 		50ADFF97201F53D600D50D53 /* PluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ADFF96201F53D600D50D53 /* PluginTests.swift */; };
 		50ADFF99201F53D600D50D53 /* Plugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ADFF8B201F53D600D50D53 /* Plugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3326E2D12434D8B3001B6F01 /* AppleProviderHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleProviderHandler.swift; sourceTree = "<group>"; };
 		3B2A61DA5A1F2DD4F959604D /* Pods_Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF88201F53D600D50D53 /* Plugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Plugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50ADFF8B201F53D600D50D53 /* Plugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Plugin.h; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		DA34D39922328C8000326C50 /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				3326E2D12434D8B3001B6F01 /* AppleProviderHandler.swift */,
 				DAFD89D5223ED7D20082332B /* FacebookProviderHandler.swift */,
 				DA34D39A22328D9400326C50 /* ProviderHandler.swift */,
 				DA34D39C22328E4900326C50 /* GoogleProviderHandler.swift */,
@@ -390,6 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3326E2D22434D8B3001B6F01 /* AppleProviderHandler.swift in Sources */,
 				DA8E24E4223977D60030886C /* TwitterProviderHandler.swift in Sources */,
 				DA34D39D22328E4900326C50 /* GoogleProviderHandler.swift in Sources */,
 				DAF56119224A506B00751B26 /* PhoneNumberProvider.swift in Sources */,
