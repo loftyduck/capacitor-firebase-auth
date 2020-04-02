@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 import Capacitor
 import FirebaseCore
 import FirebaseAuth
@@ -20,6 +21,7 @@ class AppleProviderHandler: NSObject, ProviderHandler {
         }
     }
 
+    @available(iOS 13, *)
     func signIn(call: CAPPluginCall) {
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -29,7 +31,7 @@ class AppleProviderHandler: NSObject, ProviderHandler {
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
 
-        authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         
@@ -40,8 +42,8 @@ class AppleProviderHandler: NSObject, ProviderHandler {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let user = Auth.auth().currentUser
         print("isAuthenticated")
-        print(user)
-        appleIDProvider.getCredentialState(forUserID: user) { (credentialState, error) in
+        print(user?.providerData[0].uid)
+        appleIDProvider.getCredentialState(forUserID: user?.providerData[0].uid) { (credentialState, error) in
             switch credentialState {
             case .authorized:
                 return true // The Apple ID credential is valid.
@@ -57,7 +59,6 @@ class AppleProviderHandler: NSObject, ProviderHandler {
 
     func signOut(){
         // Apple doesn't have any sign out function, the best we can do is check credential state as isAuthenticated does
-        KeychainItem.deleteUserIdentifierFromKeychain()
     }
     
     @available(iOS 13, *)
@@ -105,7 +106,7 @@ class AppleProviderHandler: NSObject, ProviderHandler {
 }
 
 @available(iOS 13.0, *)
-extension SignInWithApple: ASAuthorizationControllerDelegate {
+extension AppleProviderHandler: ASAuthorizationControllerDelegate {
 
     public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         
