@@ -1,8 +1,9 @@
 import { Plugins } from '@capacitor/core';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import * as firebase from 'firebase/app';
+import { OAuthProvider } from '@firebase/auth-types';
 import { Observable, throwError } from 'rxjs';
 import {
+	AppleSignInResult,
 	CapacitorFirebaseAuthPlugin,
 	FacebookSignInResult,
 	GoogleSignInResult,
@@ -24,6 +25,7 @@ export const cfaSignIn = (providerId: string, data?: SignInOptions): Observable<
 	const facebookProvider = new firebase.auth.FacebookAuthProvider().providerId;
 	const twitterProvider = new firebase.auth.TwitterAuthProvider().providerId;
 	const phoneProvider = new firebase.auth.PhoneAuthProvider().providerId;
+  const appleProvider = new firebase.auth.OAuthProvider('apple.com');
 	switch (providerId) {
 		case googleProvider:
 			return cfaSignInGoogle();
@@ -33,6 +35,8 @@ export const cfaSignIn = (providerId: string, data?: SignInOptions): Observable<
 			return cfaSignInFacebook();
 		case phoneProvider:
 			return cfaSignInPhone(data.phone, data.verificationCode);
+		case appleProvider.providerId:
+			return cfaSignInApple(appleProvider);
 		default:
 			return throwError(new Error(`The '${providerId}' provider was not supported`));
 	}
@@ -54,6 +58,7 @@ export const cfaSignInGoogle = (): Observable<firebase.User> => {
 			// web sign in
 			firebase.app().auth().signInWithCredential(credential)
 				.then((userCredential: firebase.auth.UserCredential) => {
+
 					observer.next(userCredential.user);
 					observer.complete();
 				})
@@ -172,6 +177,37 @@ export const cfaSignInPhoneOnCodeReceived = () : Observable<{verificationId: str
 			observer.complete();
 		});
 	});
+};
+
+/**
+ * Call the Apple sign in method on native layer and sign in on web layer with retrieved credentials.
+ */
+export const cfaSignInApple = (provider: OAuthProvider): Observable<firebase.User> => {
+  return new Observable(observer => {
+    // get the provider id
+    const providerId = provider.providerId;
+
+    // native sign in
+    plugin.signIn({providerId}).then((result: AppleSignInResult) => {
+
+      const credential = provider.credential({
+				idToken: result.identityToken,
+				rawNonce: result.nonce
+      });
+
+      // web sign in
+      firebase.app().auth().signInWithCredential(credential)
+          .then((userCredential: firebase.auth.UserCredential) => {
+            observer.next(userCredential.user);
+            observer.complete();
+          })
+          .catch((reject: any) => {
+            observer.error(reject);
+          });
+    }).catch(reject => {
+      observer.error(reject);
+    });
+  });
 };
 
 /**

@@ -36,7 +36,13 @@ export class PhoneSignInResult {
   }
 }
 
-export type SignInResult = GoogleSignInResult | TwitterSignInResult | FacebookSignInResult | PhoneSignInResult;
+export class AppleSignInResult {
+  providerId = 'apple.com';
+  constructor(public identityToken: string, public nonce: string) {
+  }
+}
+
+export type SignInResult = GoogleSignInResult | TwitterSignInResult | FacebookSignInResult | PhoneSignInResult | AppleSignInResult;
 
 export interface PhoneSignInOptions {
   phone: string,

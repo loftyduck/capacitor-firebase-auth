@@ -1,6 +1,6 @@
 {
-  "name": "capacitor-firebase-auth",
-  "version": "0.3.0",
+  "name": "@loftyduck/capacitor-firebase-auth",
+  "version": "0.3.9",
   "description": "Capacitor plugin for Firebase Authentication",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -8,12 +8,14 @@
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish:public": "npm publish --access public"
   },
   "author": "Bernardo Baumblatt",
   "license": "MIT",
   "dependencies": {
     "@capacitor/core": "latest",
+    "firebase": "^7.13.1",
     "rxjs": "^6.5.3"
   },
   "devDependencies": {
@@ -46,10 +48,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/baumblatt/capacitor-firebase-auth.git"
+    "url": "git+https://github.com/loftyduck/capacitor-firebase-auth.git"
   },
   "bugs": {
     "url": "https://github.com/baumblatt/capacitor-firebase-auth.git/issues"
   },
-  "_where": "/Users/baumblatt/wks/cap-fire-playground"
+  "_where": "/Users/baumblatt/wks/cap-fire-playground",
+  "homepage": "https://github.com/baumblatt/capacitor-firebase-auth#readme"
 }
